@@ -37,5 +37,15 @@ namespace StudioManagement.Domain.Entities
         public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
+        public User() { } // constructor mặc định cho EF Core
+
+        public User(string userName, string email, string passwordHash, string fullName, string phone)
+        {
+            UserName = userName;
+            Email = email;
+            PasswordHash = passwordHash;
+            FullName = fullName;
+            Phone = phone;
+        }
     }
 }
