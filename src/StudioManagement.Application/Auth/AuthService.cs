@@ -4,6 +4,7 @@ using StudioManagement.Application.Abstraction.Identity;
 using StudioManagement.Application.Abstraction.Persistence;
 using StudioManagement.Contract.DTO.Request;
 using StudioManagement.Contract.DTO.Response;
+using StudioManagement.Domain.Entities;
 
 namespace StudioManagement.Application.Auth
 {
@@ -39,6 +40,32 @@ namespace StudioManagement.Application.Auth
                 Role = role,
                 ExpiredAtUtc = exp
             };
+        }
+        public async Task <string>RegisterAsync(RegisterRequest request, CancellationToken ct = default)
+        {
+            if(await users.ExistByUserNameAsync(request.UserName, ct))
+            {
+                logger.LogWarning("Registration failed: user '{UserName}' already exists", request.UserName);
+                throw new InvalidOperationException($"User '{request.UserName}' already exists.");
+            }
+            if(await users.ExistByEmailAsync(request.Email, ct))
+            {
+                logger.LogWarning("Registration failed: email '{Email}' already exists", request.Email);
+                throw new InvalidOperationException($"Email '{request.Email}' already exists.");
+            }
+            var pass = _hasher.HashPassword(request.UserName, request.Password);
+            var user = new User
+            {
+                UserName = request.UserName.Trim(),
+                Email = request.Email.Trim(),
+                FullName = request.FullName.Trim(),
+                Phone = request.Phone.Trim(),
+                PasswordHash = pass
+            };
+
+            await users.AddAsync(user, ct);
+            logger.LogInformation("User '{UserName}' registered successfully", request.UserName);
+            return user.UserId.ToString();
         }
     }
 }
