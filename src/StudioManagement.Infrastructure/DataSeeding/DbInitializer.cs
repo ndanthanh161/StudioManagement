@@ -9,6 +9,17 @@ namespace StudioManagement.Infrastructure.DataSeeding
         public static async Task SeedAsync(ApplicationDbContext db)
         {
             // Seed Role ADMIN
+            var roles = new[] { "ADMIN", "CUSTOMER", "STAFF" };
+
+            foreach (var roleName in roles)
+            {
+                if (!await db.Roles.AnyAsync(r => r.UserRole == roleName))
+                {
+                    db.Roles.Add(new Role { UserRole = roleName });
+                }
+            }
+            await db.SaveChangesAsync();
+
             var adminRole = await db.Roles.FirstOrDefaultAsync(r => r.UserRole == "ADMIN");
             if (adminRole == null)
             {

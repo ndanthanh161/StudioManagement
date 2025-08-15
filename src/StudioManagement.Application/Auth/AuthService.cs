@@ -41,26 +41,34 @@ namespace StudioManagement.Application.Auth
                 ExpiredAtUtc = exp
             };
         }
-        public async Task <string>RegisterAsync(RegisterRequest request, CancellationToken ct = default)
+        public async Task<string> RegisterAsync(RegisterRequest request, CancellationToken ct = default)
         {
-            if(await users.ExistByUserNameAsync(request.UserName, ct))
+
+            if (await users.ExistByUserNameAsync(request.UserName, ct))
             {
                 logger.LogWarning("Registration failed: user '{UserName}' already exists", request.UserName);
                 throw new InvalidOperationException($"User '{request.UserName}' already exists.");
             }
-            if(await users.ExistByEmailAsync(request.Email, ct))
+            if (await users.ExistByEmailAsync(request.Email, ct))
             {
                 logger.LogWarning("Registration failed: email '{Email}' already exists", request.Email);
                 throw new InvalidOperationException($"Email '{request.Email}' already exists.");
+            }
+            var role = await users.GetUserRole("CUSTOMER", ct);
+            if (role is null)
+            {
+                logger.LogWarning("Registration failed: role 'CUSTOMER' not found");
+                throw new InvalidOperationException("Role 'CUSTOMER' not found.");
             }
             var pass = _hasher.HashPassword(request.UserName, request.Password);
             var user = new User
             {
                 UserName = request.UserName.Trim(),
                 Email = request.Email.Trim(),
-                FullName = request.FullName.Trim(),
+                FullName = request.FullName,
                 Phone = request.Phone.Trim(),
-                PasswordHash = pass
+                PasswordHash = pass,
+                RoleId = role.Value
             };
 
             await users.AddAsync(user, ct);
