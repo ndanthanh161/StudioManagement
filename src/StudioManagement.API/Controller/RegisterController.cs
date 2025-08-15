@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudioManagement.Application.Auth;
 using StudioManagement.Contract.DTO.Request;
@@ -14,12 +13,19 @@ namespace StudioManagement.API.Controller
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, CancellationToken ct = default)
         {
-            var result = await auth.RegisterAsync(request, ct);
-            if (result is null)
+            try
             {
-                return BadRequest("Registration failed. Please try again.");
+                var result = await auth.RegisterAsync(request, ct);
+                if (result is null)
+                {
+                    return BadRequest("Registration failed. Please try again.");
+                }
+                return Ok(new { message = "Registration successful" });
             }
-            return Ok(new { message = "Registration successful" });
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
     }
 }

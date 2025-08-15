@@ -19,6 +19,13 @@ namespace StudioManagement.Infrastructure.Repositories
             return db.Users.AnyAsync(u => u.Email == email, ct);
         }
 
+        public Task<int?> GetUserRole(string role, CancellationToken ct = default)
+        {
+            var rn = role.Trim().ToUpper();
+            return db.Roles.Where(r => r.UserRole.ToUpper() == rn)
+                           .Select(r => (int?)r.RoleId)
+                           .FirstOrDefaultAsync(ct);
+        }
         public Task AddAsync(User user, CancellationToken ct = default)
         {
             db.Users.Add(user);
