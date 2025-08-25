@@ -10,7 +10,7 @@ namespace StudioManagement.Application
         {
             service.AddScoped<IAuthService, AuthService>();
             service.AddScoped<RoomService>();
-
+            service.AddScoped<ServiceService>();
             return service;
         }
     }

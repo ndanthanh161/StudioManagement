@@ -14,10 +14,10 @@ namespace StudioManagement.Domain.Entities
         public string ServiceName { get; set; } = null!;
 
         [MaxLength(500)]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public decimal ServicePrice { get; set; }   // giá gốc của dịch vụ
+        public decimal ServicePrice { get; set; }
 
         // N–N với Booking qua bảng trung gian
         public ICollection<BookingService> BookingServices { get; set; } = new List<BookingService>();

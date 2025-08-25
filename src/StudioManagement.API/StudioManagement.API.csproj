@@ -22,7 +22,6 @@
 	<ItemGroup>
 		<!-- Tham chiếu tới các tầng -->
 		<ProjectReference Include="..\StudioManagement.Application\StudioManagement.Application.csproj" />
-		<ProjectReference Include="..\StudioManagement.Contract\StudioManagement.Contract.csproj" />
 		<ProjectReference Include="..\StudioManagement.Infrastructure\StudioManagement.Infrastructure.csproj" />
 	</ItemGroup>
 
