@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using StudioManagement.Application.Auth;
+using StudioManagement.Application.Services.Auth;
+using StudioManagement.Application.Services.Rooms;
 
 namespace StudioManagement.Application
 {
@@ -8,6 +9,8 @@ namespace StudioManagement.Application
         public static IServiceCollection AddApplication(this IServiceCollection service)
         {
             service.AddScoped<IAuthService, AuthService>();
+            service.AddScoped<RoomService>();
+
             return service;
         }
     }

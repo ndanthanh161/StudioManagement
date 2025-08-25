@@ -19,6 +19,8 @@ namespace StudioManagement.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenService, TokenService>();
 
+            services.AddScoped<IRoomRepository, RoomRepository>();
+
             return services;
         }
     }

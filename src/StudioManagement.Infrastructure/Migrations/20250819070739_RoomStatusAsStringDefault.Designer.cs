@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudioManagement.Infrastructure;
 
@@ -11,9 +12,11 @@ using StudioManagement.Infrastructure;
 namespace StudioManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250819070739_RoomStatusAsStringDefault")]
+    partial class RoomStatusAsStringDefault
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,12 +193,8 @@ namespace StudioManagement.Infrastructure.Migrations
                     b.Property<decimal>("RoomPrice")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("RoomStatus")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(50)")
-                        .HasDefaultValue("Available");
+                    b.Property<int>("RoomStatus")
+                        .HasColumnType("int");
 
                     b.HasKey("RoomId");
 

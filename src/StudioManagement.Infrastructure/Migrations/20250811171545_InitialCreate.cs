@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -33,7 +32,7 @@ namespace StudioManagement.Infrastructure.Migrations
                     RoomName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     RoomPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    RoomStatus = table.Column<int>(type: "int", nullable: false)
+                    RoomStatus = table.Column<int>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {

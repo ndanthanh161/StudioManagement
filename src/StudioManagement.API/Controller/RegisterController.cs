@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudioManagement.Application.Auth;
+using StudioManagement.Application.Services.Auth;
 using StudioManagement.Contract.DTO.Request;
 
 namespace StudioManagement.API.Controller
