@@ -16,7 +16,7 @@ namespace StudioManagement.API.Controller
                 var result = await room.AddAsync(request, ct);
                 if (result is null)
                 {
-                    return NotFound(new { message = "Room not found" });
+                    return NotFound(new { message = "Room invalid" });
                 }
                 return Ok(new { message = "Room created successfully" });
             }
