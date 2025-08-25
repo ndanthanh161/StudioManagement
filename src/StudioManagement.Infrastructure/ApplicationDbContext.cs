@@ -34,6 +34,15 @@ namespace StudioManagement.Infrastructure
                 .HasForeignKey(b => b.RoomId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Room>(e =>
+            {
+                e.Property(r => r.RoomStatus)
+                 .HasConversion<string>()                 // enum <-> string trong DB
+                 .HasMaxLength(20)
+                 .HasColumnType("nvarchar(50)")
+                 .HasDefaultValue(RoomStatus.Available);  // default ở DB
+            });
+
             // ===== Booking - Payment (1:1) =====
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.Payment)

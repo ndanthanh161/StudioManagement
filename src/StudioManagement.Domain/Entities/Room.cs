@@ -1,14 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace StudioManagement.Domain.Entities
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum RoomStatus
     {
-        Available = 0,
-        Occupied = 1,
-        Maintenance = 2,
-        Inactive = 3
+        Available,
+        Occupied,
+        Maintenance,
+        Inactive,
     }
 
     [Table("Rooms")]
@@ -32,5 +34,14 @@ namespace StudioManagement.Domain.Entities
 
         // Nếu có bảng Booking tham chiếu RoomId:
         public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
+        public Room() { } // constructor mặc định cho EF Core
+
+        public Room(string roomName, int quantity, decimal roomPrice)
+        {
+            RoomName = roomName;
+            Quantity = quantity;
+            RoomPrice = roomPrice;
+        }
     }
 }

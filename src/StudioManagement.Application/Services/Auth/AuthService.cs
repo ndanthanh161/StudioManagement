@@ -6,7 +6,7 @@ using StudioManagement.Contract.DTO.Request;
 using StudioManagement.Contract.DTO.Response;
 using StudioManagement.Domain.Entities;
 
-namespace StudioManagement.Application.Auth
+namespace StudioManagement.Application.Services.Auth
 {
     public class AuthService(IUserRepository users, ITokenService token, ILogger<AuthService> logger) : IAuthService
     {
